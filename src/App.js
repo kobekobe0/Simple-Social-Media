@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from 'react'
+import './App.css'
+import axios from 'axios'
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Redirect,
+    Link,
+} from 'react-router-dom'
+import Login from './components/Login'
+import Signup from './components/Signup'
+import Home from './components/home/Home'
+import { AuthProvider } from './context/authContext'
+import PrivateRoute from './components/PrivateRoute'
+import Profile from './components/profile/Profile'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <AuthProvider>
+            <div>
+                <Switch>
+                    <Route path="/login" component={Login} />
+                    <Route path="/signup" component={Signup} />
+                    <PrivateRoute exact path="/" component={Home} />
+                    <PrivateRoute exact path="/profile" component={Profile} />
+                </Switch>
+            </div>
+        </AuthProvider>
+    )
 }
 
-export default App;
+export default App

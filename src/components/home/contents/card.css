@@ -1,0 +1,123 @@
+.card-component {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(255, 255, 255);
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    max-height: auto;
+    padding: 1rem;
+    border: 1px solid rgb(219, 219, 219);
+}
+
+.card-header {
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    background-color: rgb(255, 255, 255);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin: 0;
+    justify-content: center;
+    margin: 0;
+}
+
+.card-header-image_edit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.card-header-image_edit img {
+    width: 40px;
+    margin-right: 1rem;
+}
+.card-header-image_edit button {
+    border: none;
+    outline: none;
+}
+.card-image_username {
+    display: flex;
+    align-items: center;
+}
+.card-component img {
+    width: 100%;
+    height: 100%;
+}
+.card-image_username img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50px;
+}
+.card-image_username p {
+    margin: 0;
+}
+
+.likes {
+    display: flex;
+    align-items: center;
+    height: auto;
+}
+
+.likes button {
+    margin-right: 0.2rem;
+}
+
+.likes .likeCounter {
+    align-self: center;
+    margin: 0;
+}
+
+.post-card {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(255, 255, 255);
+    margin-top: 1rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    max-height: 1000px;
+    padding: 1rem;
+    border: 1px solid rgb(219, 219, 219);
+}
+.post-card button {
+    width: 25%;
+    padding: 0.5rem;
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid lightgray;
+    transition: all 0.2s;
+}
+.post-card button:hover {
+    background-color: rgb(127, 140, 255);
+}
+.post-card input {
+    padding: 1rem;
+    border-radius: 5px;
+    border: 1px lightgrey solid;
+    margin-bottom: 0.5rem;
+    outline: none;
+}
+
+.descriptionWrapper {
+    padding: 1rem;
+}
+.descriptionWrapper .description {
+    margin: 0;
+}
+
+.postFooter {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.postFooter .comments {
+    display: flex;
+    align-items: center;
+    height: auto;
+}
+
+.postFooter .comments p {
+    margin: 0;
+}

@@ -1,0 +1,69 @@
+.userInfoPreview {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 50%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.userInfoPreview .username {
+    font-size: 20px;
+}
+
+.navTitle {
+    margin-top: 2rem;
+}
+
+.nav .logoutBtn {
+    border: 0;
+    padding: 0.5rem;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    transition: all 0.2s;
+    color: tomato;
+    text-align: end;
+}
+.nav .profileBtn {
+    border: 0;
+    padding: 0.5rem;
+    margin-top: 2rem;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    transition: all 0.2s;
+    color: rgb(85, 144, 255);
+    text-align: end;
+}
+.nav .messageBtn {
+    border: 0;
+    padding: 0.5rem;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    transition: all 0.2s;
+    color: rgb(56, 189, 67);
+    text-align: end;
+}
+.nav .homeBtn {
+    border: 0;
+    padding: 0.5rem;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    transition: all 0.2s;
+    color: rgb(107, 56, 189);
+    text-align: end;
+}
+.nav .homeBtn:hover {
+    color: white;
+    background-color: rgb(107, 56, 189);
+}
+.nav .messageBtn:hover {
+    color: white;
+    background-color: rgb(56, 189, 67);
+}
+.nav .logoutBtn:hover {
+    background-color: tomato;
+    color: white;
+}
+.nav .profileBtn:hover {
+    background-color: rgb(85, 144, 255);
+    color: white;
+}

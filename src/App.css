@@ -1,38 +1,117 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+    text-align: center;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
-
+::-webkit-scrollbar {
+    width: 1px;
+}
 .App-link {
-  color: #61dafb;
+    color: #61dafb;
+}
+.form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+card {
+    display: flex;
+    flex-direction: column;
+    border: rgb(71, 71, 71) 1px solid;
+    padding: 2rem;
+}
+
+.sl-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.sl-form input {
+    margin: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    outline: none;
+    border: none;
+    background-color: #ebebeb;
+    font-size: 0.7rem;
+}
+
+.sl-form button {
+    padding: 0.5rem;
+    margin-top: 1rem;
+    border: none;
+}
+
+.sl-form #login {
+    background-color: rgb(95, 111, 255);
+    color: aliceblue;
+    transition: all 0.5s;
+}
+.sl-form #signup {
+    background-color: rgb(95, 255, 156);
+    color: rgb(53, 53, 53);
+    transition: all 0.5s;
+}
+.sl-form #login:hover {
+    background-color: rgb(59, 79, 255);
+}
+.sl-form #signup:hover {
+    background-color: rgb(255, 255, 255);
+}
+
+.home {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.685);
+    width: 100%;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.contents {
+    height: 100%;
+    overflow-y: auto;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    background-color: rgb(255, 255, 255);
+}
+.nav {
+    width: 15%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+}
+.nav h1 {
+    font-family: 'Zen Kurenaido', sans-serif;
+    font-size: 2rem;
+}
+.nav h2 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+}
+.nav button {
+    width: 50%;
+    justify-self: center;
 }
