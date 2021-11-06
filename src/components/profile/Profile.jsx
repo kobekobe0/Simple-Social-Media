@@ -8,6 +8,7 @@ function Profile() {
     }
     return (
         <div className="profile">
+            <button onClick={back}>Back</button>
             <div className="profileHeader">img</div>
         </div>
     )

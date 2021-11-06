@@ -110,6 +110,7 @@ function Content() {
                     userId={res.userId}
                     postRef={postRef}
                     ifLiked={res.likes.includes(currentUser.uid)}
+                    ifSaved={res.saves.includes(currentUser.uid)}
                     reload={setTemp}
                     reloader={temp}
                     comments={res.comments.length}

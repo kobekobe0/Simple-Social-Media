@@ -8,12 +8,14 @@ import { useAuth } from '../../../context/authContext'
 import firebase from '@firebase/app-compat'
 import Popoverr from './Popover'
 import PostModal from './PostModal'
+import { db } from '../../../firebase'
 
 function CardContent(props) {
     const { currentUser } = useAuth()
     const [toggleLike, setToggleLike] = useState(props.ifLiked)
+    const [toggleSave, setToggleSave] = useState(props.ifSaved)
     const [likes, setLikes] = useState(props.likes)
-    const [comments, setComments] = useState(props.comments)
+    //const [comments, setComments] = useState(props.comments)
     const [addComments, setAddComments] = useState('')
     const [temp, setTemp] = useState(false)
     const [modalShow, setModalShow] = useState(false)
@@ -24,7 +26,11 @@ function CardContent(props) {
         const addLike = addLikeRef.update({
             likes: firebase.firestore.FieldValue.arrayUnion(currentUser.uid),
         })
-
+        db.collection('users')
+            .doc(currentUser.uid)
+            .update({
+                likes: firebase.firestore.FieldValue.arrayUnion(docuId),
+            })
         setToggleLike(!toggleLike)
         setLikes(likes + 1)
     }
@@ -35,7 +41,11 @@ function CardContent(props) {
         const addLike = addLikeRef.update({
             likes: firebase.firestore.FieldValue.arrayRemove(currentUser.uid),
         })
-
+        db.collection('users')
+            .doc(currentUser.uid)
+            .update({
+                likes: firebase.firestore.FieldValue.arrayRemove(docuId),
+            })
         setToggleLike(!toggleLike)
         console.log(toggleLike)
         setLikes(likes - 1)
@@ -53,6 +63,36 @@ function CardContent(props) {
     const deletePost = async (docuId) => {
         const res = await props.postRef.doc(docuId).delete()
         props.reload(props.reloader + 1)
+    }
+
+    const saveToBookmark = async (docuId) => {
+        db.collection('users')
+            .doc(currentUser.uid)
+            .update({
+                savedItems: firebase.firestore.FieldValue.arrayUnion(docuId),
+            })
+
+        const addLikeRef = await props.postRef.doc(docuId)
+
+        addLikeRef.update({
+            saves: firebase.firestore.FieldValue.arrayUnion(currentUser.uid),
+        })
+        setToggleSave(!toggleSave)
+    }
+
+    const unSaveToBookmark = async (docuId) => {
+        db.collection('users')
+            .doc(currentUser.uid)
+            .update({
+                savedItems: firebase.firestore.FieldValue.arrayRemove(docuId),
+            })
+
+        const addLikeRef = await props.postRef.doc(docuId)
+
+        addLikeRef.update({
+            saves: firebase.firestore.FieldValue.arrayRemove(currentUser.uid),
+        })
+        setToggleSave(!toggleSave)
     }
 
     return (
@@ -87,7 +127,16 @@ function CardContent(props) {
             </div>
             <div className="postFooter">
                 <div className="likes">
-                    {toggleLike ? (
+                    {!toggleLike ? (
+                        <button
+                            style={{ border: 'none', backgroundColor: 'snow' }}
+                            onClick={
+                                (props.likes + 1, () => like(props.documentID))
+                            }
+                        >
+                            <AiOutlineHeart size={30} />
+                        </button>
+                    ) : (
                         <button
                             onClick={() => unlike(props.documentID)}
                             style={{ border: 'none', backgroundColor: 'snow' }}
@@ -97,32 +146,35 @@ function CardContent(props) {
                                 style={{ color: 'tomato' }}
                             />
                         </button>
-                    ) : (
-                        <button
-                            style={{ border: 'none', backgroundColor: 'snow' }}
-                            onClick={
-                                (props.likes + 1, () => like(props.documentID))
-                            }
-                        >
-                            <AiOutlineHeart size={30} />
-                        </button>
                     )}
 
                     <p className="likeCounter">{likes}</p>
                 </div>
 
                 <div className="comments">
-                    <button
-                        style={{
-                            border: 'none',
-                            backgroundColor: 'snow',
-                            marginLeft: '2rem',
-                        }}
-                        onClick={() => setModalShow(true)}
-                    >
-                        <BsBookmark size={25} />
-                    </button>
-                    <p>{comments}</p>
+                    {toggleSave ? (
+                        <button
+                            style={{
+                                border: 'none',
+                                backgroundColor: 'snow',
+                                marginLeft: '2rem',
+                            }}
+                            onClick={() => unSaveToBookmark(props.documentID)}
+                        >
+                            <BsFillBookmarkFill size={25} />
+                        </button>
+                    ) : (
+                        <button
+                            style={{
+                                border: 'none',
+                                backgroundColor: 'snow',
+                                marginLeft: '2rem',
+                            }}
+                            onClick={() => saveToBookmark(props.documentID)}
+                        >
+                            <BsBookmark size={25} />
+                        </button>
+                    )}
                 </div>
                 <PostModal
                     show={modalShow}
