@@ -32,6 +32,7 @@ function Signup() {
             db.collection('users').doc(userId).set({
                 bio: '',
                 followers: [],
+                following: [],
                 savedItems: [],
                 likes: [],
                 posts: [],

@@ -13,14 +13,14 @@ function Login() {
 
     const Login = (e) => {
         e.preventDefault()
-        auth.signInWithEmailAndPassword(email, password).then((res) => {
-            try {
+        auth.signInWithEmailAndPassword(email, password)
+            .then((res) => {
                 setCurrentUser(res.user)
                 history.push('/')
-            } catch {
+
                 console.log('error login')
-            }
-        })
+            })
+            .catch((e) => console.log(e))
     }
 
     return (

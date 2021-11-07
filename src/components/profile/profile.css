@@ -2,6 +2,125 @@
     width: 100vw;
     display: flex;
     justify-content: center;
+    background-color: rgb(255, 255, 255);
+    justify-content: center;
+    height: 1000px;
+    margin: 0;
+}
+.profileWrapper {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(243, 243, 243, 0.281);
     align-items: center;
-    background-color: aqua;
+    width: 1200px;
+    padding-top: 1rem;
+    border: 1px solid lightgray;
+}
+
+.profileHeader {
+    display: flex;
+    flex-direction: column;
+}
+
+.profileHeader .banner {
+    height: 500px;
+}
+
+.profileHeader .banner img {
+    height: 100%;
+    width: 1000px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.profileHeader .profileInfo {
+    display: flex;
+    height: 180px;
+    margin-top: 0.8rem;
+    background-color: rgb(255, 255, 255);
+    align-items: center;
+    padding: 1rem;
+    justify-content: flex-start;
+    border-radius: 10px;
+    border: solid 1px rgb(163, 163, 163);
+}
+.profileHeader .profileInfo .profileImg {
+    width: 150px;
+    height: 150px;
+    margin-right: 1.2rem;
+}
+.profileHeader .profileInfo .profileImg img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: fill;
+}
+
+.profileHeader .profileInfo .profileStat {
+    display: flex;
+    flex-direction: column;
+}
+.profileHeader .profileInfo .profileStat .profileUsername {
+    font-size: 3.6rem;
+}
+.profileHeader .profileInfo .profileStat .follows {
+    display: flex;
+    width: 100%;
+}
+.profileHeader .profileInfo .profileStat .follows p {
+    margin-right: 1rem;
+    cursor: pointer;
+}
+.profileHeader .profileInfo .profileStat .follows p:hover {
+    color: rgb(57, 57, 255);
+}
+
+.profileHeader .profileInfo .profileButton {
+    margin-left: auto;
+}
+
+.profileNav {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 60%;
+    margin: 2rem;
+}
+
+.profileNav .profileLinks {
+    background-color: rgb(255, 255, 255);
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #030303;
+    transition: all 0.2s;
+    min-width: 80px;
+    text-align: center;
+    border: solid 1px rgb(199, 199, 199);
+    margin-top: 1rem;
+}
+.profileNav .profileLinks:hover {
+    background-color: aquamarine;
+}
+
+.hrProfile {
+    border: 0;
+    clear: both;
+    display: block;
+    width: 85%;
+    background-color: #030303;
+    height: 1px;
+}
+.backToHome {
+    position: fixed;
+    margin: 0;
+    float: left;
+    bottom: 0;
+    right: 0;
+    margin-right: 6rem;
+    border-radius: 35px;
+    height: 70px;
+    width: 70px;
+    border: none;
 }
