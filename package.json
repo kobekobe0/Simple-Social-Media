@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.24.0",
     "capitals-coordinates": "^1.2.0",
+    "compressorjs": "^1.1.1",
     "firebase": "^9.2.0",
     "random-country": "^1.0.1",
     "react": "^17.0.2",

@@ -6,6 +6,7 @@ import { db, app, storagee } from '../../../firebase'
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { useAuth } from '../../../context/authContext'
 import firebase from '@firebase/app-compat'
+import Compressor from 'compressorjs'
 
 function Content() {
     const { currentUser } = useAuth()
@@ -20,12 +21,20 @@ function Content() {
     const [description, setDescription] = useState('')
     const [temp, setTemp] = useState(0)
     const [documentID, setDocumentID] = useState([])
-    //const storageRef = app.storage().ref()
+
+    const [compressedFile, setCompressedFile] = useState(null)
 
     const handleUpload = (e) => {
-        if (e.target.files[0]) {
-            setUpload(e.target.files[0])
-        }
+        const image = e.target.files[0]
+        new Compressor(image, {
+            quality: 0.6, // 0.6 can also be used, but its not recommended to go below.
+            success: (compressedResult) => {
+                // compressedResult has the compressed file.
+                // Use the compressed file to upload the images to your server.
+                setUpload(compressedResult)
+                console.log(compressedResult)
+            },
+        })
     }
 
     const createDocument = async (imgurl) => {

@@ -35,6 +35,7 @@
 .card-header-image_edit button {
     border: none;
     outline: none;
+    background-color: white;
 }
 .card-image_username {
     display: flex;

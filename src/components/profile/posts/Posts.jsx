@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { db } from '../../../firebase'
 import firebase from '@firebase/app-compat'
+import PostCard from './postCard'
 
 function Posts(props) {
     const [posts, setPosts] = useState([])
@@ -18,6 +19,7 @@ function Posts(props) {
                     let docs = res.docs
                     for (let doc of docs) {
                         postsTemp.push({
+                            documentId: doc.id,
                             ...doc.data(),
                         })
                     }
@@ -39,23 +41,24 @@ function Posts(props) {
         getPosts().catch((err) => console.log(err))
     }, [posts])
 
+    console.log(renderPost)
     return (
-        <div>
-            POSTS
-            {posts.map((post) => (
-                <p>{post}</p>
-            ))}
-            {renderPost
-                .sort((a, b) => {
-                    return a.valueToUseForPuttingItOnTop >
-                        b.valueToUseForPuttingItOnTop
-                        ? 1
-                        : -1
-                })
-                .map((post) => (
-                    <p>{post.description}</p>
-                ))}
-            <button onClick={getPosts}>get</button>
+        <div className="postBlock">
+            <div className="postWrapper">
+                {renderPost
+                    .sort((a, b) => {
+                        return a.valueToUseForPuttingItOnTop >
+                            b.valueToUseForPuttingItOnTop
+                            ? -1
+                            : 1
+                    })
+                    .map((post) => (
+                        <PostCard
+                            img={post.imgUrl}
+                            documentId={post.documentId}
+                        />
+                    ))}
+            </div>
         </div>
     )
 }
