@@ -11,6 +11,11 @@ function PostCard(props) {
                 alt=""
                 onClick={() => setModalShow(true)}
             />
+            <PostModal
+                open={modalShow}
+                close={() => setModalShow(false)}
+                documentId={props.documentId}
+            />
         </div>
     )
 }

@@ -14,6 +14,7 @@
 }
 ::-webkit-scrollbar {
     width: 1px;
+    height: 1px;
 }
 .App-link {
     color: #61dafb;
@@ -30,6 +31,10 @@ card {
     flex-direction: column;
     border: rgb(71, 71, 71) 1px solid;
     padding: 2rem;
+}
+.form {
+    display: flex;
+    flex-direction: column;
 }
 
 .sl-form {
@@ -75,7 +80,7 @@ card {
 .home {
     display: flex;
     justify-content: center;
-    height: 100vh;
+    height: 95vh;
     background-color: rgba(255, 255, 255, 0.685);
     width: 100%;
 }
@@ -114,4 +119,18 @@ card {
 .nav button {
     width: 50%;
     justify-self: center;
+}
+.topNav {
+    position: sticky;
+    top: 0;
+    text-align: center;
+    color: white;
+    width: 100vw;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Roboto', sans-serif;
+    border-bottom: 0.8px solid lightgray;
+    font-weight: bold;
 }

@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { useState } from 'react'
 import { useAuth } from '../context/authContext'
 import { auth } from '../firebase'
+import { RiDeleteBin7Line } from 'react-icons/ri'
 
 function Login() {
     const { signup, setCurrentUser } = useAuth()

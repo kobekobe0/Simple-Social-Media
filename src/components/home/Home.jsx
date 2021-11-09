@@ -4,6 +4,7 @@ import Content from './contents/Content'
 import Preview from './preview/Preview'
 import Message from '../message/Message'
 import Profile from '../profile/Profile'
+import TopNav from './TopNav'
 function Home() {
     const [render, setRender] = useState(2)
     return (

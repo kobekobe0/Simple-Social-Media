@@ -14,11 +14,13 @@ import Home from './components/home/Home'
 import { AuthProvider } from './context/authContext'
 import PrivateRoute from './components/PrivateRoute'
 import Profile from './components/profile/Profile'
+import TopNav from './components/home/TopNav'
 
 function App() {
     return (
         <AuthProvider>
             <div>
+                <TopNav />
                 <Switch>
                     <Route path="/login" component={Login} />
                     <Route path="/signup" component={Signup} />

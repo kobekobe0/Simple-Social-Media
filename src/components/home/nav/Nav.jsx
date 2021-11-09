@@ -11,7 +11,6 @@ function Nav(props) {
     }
     return (
         <nav className="nav">
-            <h1 className="navTitle">DUMPS</h1>
             <div className="userInfoPreview">
                 <img
                     src={currentUser.photoURL}

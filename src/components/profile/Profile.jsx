@@ -24,9 +24,6 @@ function Profile() {
     const [saves, setSaves] = useState([])
     const [username, setUsername] = useState('')
     const { currentUser } = useAuth()
-    const back = () => {
-        history.push('/')
-    }
 
     const getUserInfo = async () => {
         let userTemp = {}
@@ -79,9 +76,6 @@ function Profile() {
                     <Posts posts={posts} />
                 </PrivateRoute>
             </div>
-            <button className="backToHome" onClick={back}>
-                Back
-            </button>
         </div>
     )
 }
