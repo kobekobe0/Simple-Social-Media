@@ -3,15 +3,14 @@
     align-items: center;
     justify-content: space-evenly;
     width: 50%;
-    margin-top: 1rem;
+    margin-top: 2rem;
     margin-bottom: 1rem;
+    flex-direction: column;
+    margin: 0;
 }
 .userInfoPreview .username {
-    font-size: 20px;
-}
-
-.navTitle {
-    margin-top: 2rem;
+    font-size: 16px;
+    margin-bottom: 1rem;
 }
 
 .nav .logoutBtn {
@@ -22,16 +21,22 @@
     transition: all 0.2s;
     color: tomato;
     text-align: end;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 .nav .profileBtn {
     border: 0;
     padding: 0.5rem;
-    margin-top: 2rem;
+
     border-radius: 10px;
     background-color: rgb(255, 255, 255);
     transition: all 0.2s;
     color: rgb(85, 144, 255);
     text-align: end;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 .nav .messageBtn {
     border: 0;
@@ -41,6 +46,9 @@
     transition: all 0.2s;
     color: rgb(56, 189, 67);
     text-align: end;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 .nav .homeBtn {
     border: 0;
@@ -50,6 +58,15 @@
     transition: all 0.2s;
     color: rgb(107, 56, 189);
     text-align: end;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 0;
+}
+.navButtonText {
+    margin: 0;
+    padding-right: 10px;
+    font-size: 1em;
 }
 .nav .homeBtn:hover {
     color: white;

@@ -39,6 +39,7 @@ function Content() {
 
     const createDocument = async (imgurl) => {
         const pushPost = await userRef.doc(currentUser.uid)
+        const addDocumentID = await postRef
         postRef
             .add({
                 dateCreated: firebase.firestore.Timestamp.now().toDate(),
@@ -51,11 +52,18 @@ function Content() {
                 userPicture: currentUser.photoURL,
                 valueToUseForPuttingItOnTop: contents.length + 1,
                 saves: [],
+                documentID: '',
             })
             .then((res) => {
                 pushPost.update({
                     posts: firebase.firestore.FieldValue.arrayUnion(res.id),
                 })
+                addDocumentID.doc(res.id).update({
+                    documentID: res.id,
+                })
+            })
+            .catch((err) => {
+                console.log(err)
             })
     }
 
@@ -82,7 +90,6 @@ function Content() {
                 ...doc.data(),
             })
         )
-
         setContents(contentsToSet)
     }
 

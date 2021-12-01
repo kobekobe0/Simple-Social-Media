@@ -7,8 +7,8 @@ import { useAuth } from '../../context/authContext'
 import ProfileNav from './profileNav/ProfileNav'
 import { Switch, Route } from 'react-router-dom'
 import Posts from './posts/Posts'
-import Likes from './posts/Likes'
-import Saves from './posts/Saves'
+import Likes from './Likes/Likes'
+import Saves from './Saves/Saves'
 import PrivateRoute from '../PrivateRoute'
 
 function Profile() {
@@ -65,16 +65,24 @@ function Profile() {
                 <hr className="hrProfile" />
 
                 <PrivateRoute path="/profile/likes">
-                    <Likes />
+                    <Likes likes={likes} />
                 </PrivateRoute>
 
                 <PrivateRoute path="/profile/saves">
-                    <Saves />
+                    <Saves saves={saves} />
                 </PrivateRoute>
 
                 <PrivateRoute exact path="/profile">
                     <Posts posts={posts} />
                 </PrivateRoute>
+                <div
+                    style={{
+                        height: '100px',
+                        width: '100vw',
+                        backgroundColor: 'lighttomato',
+                        marginTop: '3rem',
+                    }}
+                ></div>
             </div>
         </div>
     )

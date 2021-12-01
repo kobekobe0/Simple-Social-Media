@@ -2,6 +2,11 @@ import React from 'react'
 import { useAuth } from '../../../context/authContext'
 import './nav.css'
 import { useHistory } from 'react-router-dom'
+import { RiHomeLine } from 'react-icons/ri'
+import { AiOutlineUser } from 'react-icons/ai'
+import { BiMessageAlt } from 'react-icons/bi'
+import { FiLogOut } from 'react-icons/fi'
+
 function Nav(props) {
     const { logout, currentUser } = useAuth()
     const history = useHistory()
@@ -28,19 +33,23 @@ function Nav(props) {
                 className="profileBtn"
                 onClick={() => props.changeDisplay(2)}
             >
-                Home
+                <p className="navButtonText">Home</p>
+                <RiHomeLine size={20} />
             </button>
             <button className="homeBtn" onClick={goToProfile}>
-                Profile
+                <p className="navButtonText">Profile</p>
+                <AiOutlineUser size={20} />
             </button>
             <button
                 onClick={() => props.changeDisplay(1)}
                 className="messageBtn"
             >
-                Messages
+                <p className="navButtonText">Messages</p>
+                <BiMessageAlt size={20} />
             </button>
             <button className="logoutBtn" onClick={logout}>
-                Logout
+                <p className="navButtonText">Logout</p>
+                <FiLogOut size={20} />
             </button>
         </nav>
     )

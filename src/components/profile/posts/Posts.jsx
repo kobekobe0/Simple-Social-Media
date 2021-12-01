@@ -9,25 +9,18 @@ function Posts(props) {
     const postRef = db.collection('posts')
 
     const getPosts = async () => {
-        const postsTemp = []
+        let usersPromise = []
 
-        if (posts) {
-            await postRef
-                .where(firebase.firestore.FieldPath.documentId(), 'in', posts)
-                .get()
-                .then((res) => {
-                    let docs = res.docs
-                    for (let doc of docs) {
-                        postsTemp.push({
-                            documentId: doc.id,
-                            ...doc.data(),
-                        })
-                    }
-                })
-                .catch((err) => console.log(err))
-        }
+        posts.map((id) => {
+            usersPromise.push(postRef.doc(id).get())
+        })
 
-        setRenderPost(postsTemp)
+        Promise.all(usersPromise).then((docs) => {
+            const posts = docs.map((doc) => doc.data())
+
+            // do your operations with users list
+            setRenderPost(posts)
+        })
     }
 
     //i set parameters for when to make re render in this useState
@@ -45,19 +38,20 @@ function Posts(props) {
     return (
         <div className="postBlock">
             <div className="postWrapper">
-                {renderPost
-                    .sort((a, b) => {
-                        return a.valueToUseForPuttingItOnTop >
-                            b.valueToUseForPuttingItOnTop
-                            ? -1
-                            : 1
-                    })
-                    .map((post) => (
-                        <PostCard
-                            img={post.imgUrl}
-                            documentId={post.documentId}
-                        />
-                    ))}
+                {renderPost != []
+                    ? renderPost
+                          .sort((a, b) => {
+                              return a.dateCreated > b.dateCreated ? -1 : 1
+                          })
+                          .map((post) => (
+                              <PostCard
+                                  img={post.imgUrl}
+                                  documentId={post.documentID}
+                                  likes={post.likes}
+                                  reload={getPosts}
+                              />
+                          ))
+                    : null}
             </div>
         </div>
     )

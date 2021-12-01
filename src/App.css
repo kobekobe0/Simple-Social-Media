@@ -1,16 +1,17 @@
 .App {
     text-align: center;
+    background-color: #506897;
 }
 
 .App-header {
-    background-color: #282c34;
+    background-color: #506897;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     font-size: calc(10px + 2vmin);
-    color: white;
+    color: rgb(180, 31, 31);
 }
 ::-webkit-scrollbar {
     width: 1px;
@@ -81,8 +82,8 @@ card {
     display: flex;
     justify-content: center;
     height: 95vh;
-    background-color: rgba(255, 255, 255, 0.685);
-    width: 100%;
+    background-color: rgba(245, 245, 245, 0.411);
+    width: 100vw;
 }
 
 .wrapper {
@@ -94,19 +95,24 @@ card {
 .contents {
     height: 100%;
     overflow-y: auto;
-    width: 40%;
+    width: 45%;
     display: flex;
     flex-direction: column;
     margin: 0;
-    background-color: rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0);
 }
 .nav {
     width: 15%;
     text-align: center;
     display: flex;
     flex-direction: column;
-
+    background-color: #ffffff;
     align-items: center;
+    height: fit-content;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    margin-top: 1rem;
+    border: 0.5px solid lightgray;
 }
 .nav h1 {
     font-family: 'Zen Kurenaido', sans-serif;

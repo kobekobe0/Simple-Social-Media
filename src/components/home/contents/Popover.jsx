@@ -15,7 +15,14 @@ function Popoverr(props) {
 
     return (
         <div ref={ref}>
-            <Button variant="light" onClick={handleClick}>
+            <Button
+                variant="light"
+                style={{
+                    backgroundColor: 'unset',
+                    borderColor: 'rgba(0,0,0,0)',
+                }}
+                onClick={handleClick}
+            >
                 <BsThreeDots />
             </Button>
 

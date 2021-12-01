@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PostModal from './PostModal'
 
 function PostCard(props) {
     const [modalShow, setModalShow] = React.useState(false)
+
     return (
         <div className="postCard">
             <img

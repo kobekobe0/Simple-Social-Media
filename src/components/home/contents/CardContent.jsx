@@ -7,7 +7,7 @@ import { BsFillBookmarkFill, BsBookmark } from 'react-icons/bs'
 import { useAuth } from '../../../context/authContext'
 import firebase from '@firebase/app-compat'
 import Popoverr from './Popover'
-import PostModal from './PostModal'
+
 import { db } from '../../../firebase'
 
 function CardContent(props) {
@@ -18,10 +18,11 @@ function CardContent(props) {
     //const [comments, setComments] = useState(props.comments)
     const [addComments, setAddComments] = useState('')
     const [temp, setTemp] = useState(false)
-    const [modalShow, setModalShow] = useState(false)
+    const [reverse, setReverse] = useState(props.reverse)
+    const userRef = db.collection('users')
 
-    const like = async (docuId) => {
-        const addLikeRef = await props.postRef.doc(docuId)
+    const like = async (docuId, postReference) => {
+        const addLikeRef = await postReference.doc(docuId)
 
         const addLike = addLikeRef.update({
             likes: firebase.firestore.FieldValue.arrayUnion(currentUser.uid),
@@ -35,8 +36,8 @@ function CardContent(props) {
         setLikes(likes + 1)
     }
 
-    const unlike = async (docuId) => {
-        const addLikeRef = await props.postRef.doc(docuId)
+    const unlike = async (docuId, postReference) => {
+        const addLikeRef = await postReference.doc(docuId)
 
         const addLike = addLikeRef.update({
             likes: firebase.firestore.FieldValue.arrayRemove(currentUser.uid),
@@ -51,28 +52,24 @@ function CardContent(props) {
         setLikes(likes - 1)
     }
 
-    const addComment = async (docuId) => {
-        const addCommentRef = await props.postRef.doc(docuId)
-
-        const addComment = addCommentRef.update({
-            likes: firebase.firestore.FieldValue.arrayUnion(currentUser.uid),
-        })
-        setModalShow(false)
-    }
-
-    const deletePost = async (docuId) => {
-        const res = await props.postRef.doc(docuId).delete()
+    const deletePost = async (docuId, postReference) => {
+        const res = await postReference.doc(docuId).delete()
         props.reload(props.reloader + 1)
+
+        const userPostRef = await userRef.doc(currentUser.uid)
+        userPostRef.update({
+            posts: firebase.firestore.FieldValue.arrayRemove(docuId),
+        })
     }
 
-    const saveToBookmark = async (docuId) => {
+    const saveToBookmark = async (docuId, postReference) => {
         db.collection('users')
             .doc(currentUser.uid)
             .update({
                 savedItems: firebase.firestore.FieldValue.arrayUnion(docuId),
             })
 
-        const addLikeRef = await props.postRef.doc(docuId)
+        const addLikeRef = await postReference.doc(docuId)
 
         addLikeRef.update({
             saves: firebase.firestore.FieldValue.arrayUnion(currentUser.uid),
@@ -80,14 +77,14 @@ function CardContent(props) {
         setToggleSave(!toggleSave)
     }
 
-    const unSaveToBookmark = async (docuId) => {
+    const unSaveToBookmark = async (docuId, postReference) => {
         db.collection('users')
             .doc(currentUser.uid)
             .update({
                 savedItems: firebase.firestore.FieldValue.arrayRemove(docuId),
             })
 
-        const addLikeRef = await props.postRef.doc(docuId)
+        const addLikeRef = await postReference.doc(docuId)
 
         addLikeRef.update({
             saves: firebase.firestore.FieldValue.arrayRemove(currentUser.uid),
@@ -110,35 +107,55 @@ function CardContent(props) {
                     <Popoverr
                         postedImage={props.postedImage}
                         userId={props.userId}
-                        deletePost={() => deletePost(props.documentID)}
+                        deletePost={() =>
+                            deletePost(props.documentID, props.postRef)
+                        }
                     />
                 </div>
             </div>
 
             <div>
-                <img
-                    src={props.postedImage}
-                    alt="postedImage"
-                    className="posted-image"
-                />
+                {props.postedImage == '' ? null : (
+                    <img
+                        src={props.postedImage}
+                        alt="postedImage"
+                        className="posted-image"
+                    />
+                )}
             </div>
-            <div className="descriptionWrapper">
-                <p className="description">{props.description}</p>
-            </div>
-            <div className="postFooter">
+            {props.description == '' ? null : (
+                <div className="descriptionWrapper">
+                    <p
+                        className="description"
+                        style={{ wordBreak: 'break-word' }}
+                    >
+                        {props.description}
+                    </p>
+                </div>
+            )}
+
+            <div
+                className="postFooter"
+                style={{
+                    paddingTop: props.description == '' ? '1rem' : '0rem',
+                }}
+            >
                 <div className="likes">
                     {!toggleLike ? (
                         <button
                             style={{ border: 'none', backgroundColor: 'snow' }}
                             onClick={
-                                (props.likes + 1, () => like(props.documentID))
+                                (props.likes + 1,
+                                () => like(props.documentID, props.postRef))
                             }
                         >
                             <AiOutlineHeart size={30} />
                         </button>
                     ) : (
                         <button
-                            onClick={() => unlike(props.documentID)}
+                            onClick={() =>
+                                unlike(props.documentID, props.postRef)
+                            }
                             style={{ border: 'none', backgroundColor: 'snow' }}
                         >
                             <AiFillHeart
@@ -159,7 +176,12 @@ function CardContent(props) {
                                 backgroundColor: 'snow',
                                 marginLeft: '2rem',
                             }}
-                            onClick={() => unSaveToBookmark(props.documentID)}
+                            onClick={() =>
+                                unSaveToBookmark(
+                                    props.documentID,
+                                    props.postRef
+                                )
+                            }
                         >
                             <BsFillBookmarkFill size={25} />
                         </button>
@@ -170,17 +192,14 @@ function CardContent(props) {
                                 backgroundColor: 'snow',
                                 marginLeft: '2rem',
                             }}
-                            onClick={() => saveToBookmark(props.documentID)}
+                            onClick={() =>
+                                saveToBookmark(props.documentID, props.postRef)
+                            }
                         >
                             <BsBookmark size={25} />
                         </button>
                     )}
                 </div>
-                <PostModal
-                    show={modalShow}
-                    onHide={() => setModalShow(false)}
-                    postedImage={props.postedImage}
-                />
             </div>
         </div>
     )
