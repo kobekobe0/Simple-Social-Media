@@ -3,14 +3,37 @@ import { db } from '../../../firebase'
 import { BiEdit } from 'react-icons/bi'
 import Follows from './Follows'
 import Followers from './Followers'
+import EditProfile from './EditProfile'
+import { storagee } from '../../../firebase'
+import { useAuth } from '../../../context/authContext'
+import { getStorage, ref, deleteObject } from 'firebase/storage'
 
 function Userinfo(props) {
+    const { currentUser } = useAuth()
     const [followers, setFollowers] = useState([])
     const [following, setFollowing] = useState([])
     const [followerShow, setFollowerShow] = React.useState(false)
     const [followingShow, setFollowingShow] = React.useState(false)
+    const [editProfileShow, setEditProfileShow] = React.useState(false)
+    const [pfpUpload, setPfpUpload] = useState('')
+    const tempStore = storagee
+    const storage = getStorage()
 
-    console.log(following)
+    const updatePfp = (e) => {
+        e.preventDefault()
+
+        const pfpRef = ref(storage, `pfp/${currentUser.uid}pfp`)
+        deleteObject(pfpRef)
+
+        const addNewPfp = async () => {
+            const tempStoreRef = tempStore.ref()
+            const fileRef = tempStoreRef.child(`pfp/${currentUser.uid}pfp`)
+            await fileRef.put(pfpUpload)
+        }
+        addNewPfp().then(() => {
+            window.location.reload(false)
+        })
+    }
 
     useEffect(() => {
         setFollowing(props.following)
@@ -34,9 +57,8 @@ function Userinfo(props) {
                 <div className="profileImg">
                     <img src={props.profileImage} alt="" />
                 </div>
-
                 <div className="profileStat">
-                    <p className="profileUsername">{props.username}</p>
+                    <p className="profileUsername">{currentUser.displayName}</p>
                     <div className="follows">
                         <p onClick={() => setFollowerShow(true)}>
                             <strong>
@@ -65,9 +87,14 @@ function Userinfo(props) {
                 <div className="profileButton">
                     <button
                         style={{ border: 'none', backgroundColor: 'white' }}
+                        onClick={() => setEditProfileShow(true)}
                     >
                         <BiEdit size={40} />
                     </button>
+                    <EditProfile
+                        open={editProfileShow}
+                        close={() => setEditProfileShow(false)}
+                    />
                 </div>
             </div>
         </div>

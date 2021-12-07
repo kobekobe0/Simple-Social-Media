@@ -4,6 +4,7 @@ import firebase from '@firebase/app-compat'
 import PostCard from '../posts/postCard'
 import CardContent from '../../home/contents/CardContent'
 import { useAuth } from '../../../context/authContext'
+import { app } from '../../../firebase'
 
 function Likes(props) {
     const [likes, setLikes] = useState([])
@@ -29,6 +30,12 @@ function Likes(props) {
         })
     }
 
+    const getPfp = async (userId) => {
+        const images = app.storage().ref().child(`pfp/${userId}pfp`)
+        let url = images.getDownloadURL()
+        return url
+    }
+
     console.log(renderLikes)
 
     useEffect(() => {
@@ -51,7 +58,7 @@ function Likes(props) {
                 .map((res) =>
                     res.userPicture != null ? (
                         <CardContent
-                            userProfilePicture={res.userPicture}
+                            userProfilePicture={getPfp}
                             description={res.description}
                             postedImage={res.imgUrl}
                             likes={res.likes.length}

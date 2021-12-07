@@ -21,14 +21,7 @@ function Signup() {
     const SignUp = async (e) => {
         e.preventDefault()
 
-        const tempStoreRef = tempStore.ref()
-        const fileRef = tempStoreRef.child(profileImg.name)
-        await fileRef.put(profileImg)
-        console.log(profileImg.type)
-        const url = await fileRef.getDownloadURL()
-        const userRef = db.collection('users')
-
-        const createDocument = (userId) => {
+        const createDocument = (userId, url) => {
             db.collection('users').doc(userId).set({
                 bio: '',
                 followers: [],
@@ -42,28 +35,35 @@ function Signup() {
             })
         }
 
-        profileImg.type.includes('image')
-            ? password == confirmPassword && username
-                ? auth
-                      .createUserWithEmailAndPassword(email, password)
-                      .then((res) => {
-                          try {
-                              createDocument(res.user.uid)
-                              res.user.updateProfile({
-                                  displayName: username,
-                                  photoURL: url,
-                              })
-                              //this is where you should make the doc in users collection
-                              console.log(res)
+        const signupTemp = async () => {
+            profileImg.type.includes('image')
+                ? password == confirmPassword && username
+                    ? auth
+                          .createUserWithEmailAndPassword(email, password)
+                          .then(async (res) => {
+                              const tempStoreRef = tempStore.ref()
+                              const fileRef = tempStoreRef.child(
+                                  `pfp/${res.user.uid}pfp`
+                              )
+                              await fileRef.put(profileImg)
+                              console.log(profileImg.type)
+                              const url = await fileRef.getDownloadURL()
 
-                              //---------------------------------------------------------
-                              history.push('/login')
-                          } catch (err) {
-                              console.log(err)
-                          }
-                      })
-                : console.log('checkpass')
-            : setImgError(true)
+                              try {
+                                  createDocument(res.user.uid, url)
+                                  res.user.updateProfile({
+                                      displayName: username,
+                                      photoURL: url,
+                                  })
+                                  history.push('/login')
+                              } catch (err) {
+                                  console.log(err)
+                              }
+                          })
+                    : console.log('checkpass')
+                : setImgError(true)
+        }
+        signupTemp()
     }
 
     return (
@@ -82,6 +82,7 @@ function Signup() {
                         placeholder="username"
                         onChange={(e) => setUsername(e.target.value)}
                         maxLength="12"
+                        minLength="4"
                         required
                     />
                     <input
@@ -89,6 +90,7 @@ function Signup() {
                         type="password"
                         placeholder="type password"
                         onChange={(e) => setPassword(e.target.value)}
+                        minLength="6"
                     />
                     <input
                         required

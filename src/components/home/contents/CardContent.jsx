@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './card.css'
 import { AiFillLike } from 'react-icons/ai'
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
@@ -15,11 +15,20 @@ function CardContent(props) {
     const [toggleLike, setToggleLike] = useState(props.ifLiked)
     const [toggleSave, setToggleSave] = useState(props.ifSaved)
     const [likes, setLikes] = useState(props.likes)
+    const [pfp, setPfp] = useState('')
     //const [comments, setComments] = useState(props.comments)
     const [addComments, setAddComments] = useState('')
     const [temp, setTemp] = useState(false)
     const [reverse, setReverse] = useState(props.reverse)
     const userRef = db.collection('users')
+
+    useEffect(() => {
+        const pfpTemp = props.userProfilePicture(props.userId)
+        Promise.all([pfpTemp]).then((values) => {
+            setPfp(values[0])
+        })
+        console.log(pfpTemp)
+    }, [props.userId])
 
     const like = async (docuId, postReference) => {
         const addLikeRef = await postReference.doc(docuId)
@@ -97,10 +106,7 @@ function CardContent(props) {
             <div className="card-header">
                 <div className="card-header-image_edit">
                     <div className="card-image_username">
-                        <img
-                            src={props.userProfilePicture}
-                            className="user-profile-picture"
-                        />
+                        <img src={pfp} className="user-profile-picture" />
                         <p>{props.userName}</p>
                     </div>
 

@@ -69,15 +69,18 @@ function Content() {
 
     const handlePost = async () => {
         const tempStoreRef = tempStore.ref()
-        const fileRef = tempStoreRef.child(upload.name)
+        const fileRef = tempStoreRef.child(
+            `posts/${upload.name}SEPARATOR${currentUser.uid}`
+        )
         await fileRef.put(upload)
         const url = await fileRef.getDownloadURL()
 
-        createDocument(url)
+        upload !== ''
+            ? createDocument(url) && setTemp(temp + 1)
+            : alert('Please upload an image')
 
         setUpload('')
         setDescription('')
-        setTemp(temp + 1)
     }
 
     const getData = async () => {
@@ -102,6 +105,12 @@ function Content() {
         console.log(firebase.firestore.Timestamp.now().toDate())
     }, [temp])
 
+    const getPfp = async (userId) => {
+        const images = app.storage().ref().child(`pfp/${userId}pfp`)
+        let url = images.getDownloadURL()
+        return url
+    }
+
     return (
         <main className="contents">
             <div className="post-card">
@@ -112,12 +121,12 @@ function Content() {
                     onChange={(e) => setDescription(e.target.value)}
                 />
 
-                <input type="file" onChange={handleUpload} />
+                <input type="file" accept="image/" onChange={handleUpload} />
                 <button onClick={handlePost}>Post</button>
             </div>
             {contents.map((res) => (
                 <CardContent
-                    userProfilePicture={res.userPicture}
+                    userProfilePicture={getPfp}
                     description={res.description}
                     postedImage={res.imgUrl}
                     likes={res.likes.length}
