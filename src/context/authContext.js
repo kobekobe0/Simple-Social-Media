@@ -12,6 +12,7 @@ export function useAuth() {
 export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [visit, setVisit] = useState('')
     const history = useHistory()
 
     const logout = () => {
@@ -67,6 +68,8 @@ export function AuthProvider({ children }) {
         login,
         signup,
         setCurrentUser,
+        visit,
+        setVisit,
     }
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

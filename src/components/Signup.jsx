@@ -32,6 +32,7 @@ function Signup() {
                 profileBackground: '',
                 profilePicture: url,
                 username: username,
+                userId: userId,
             })
         }
 

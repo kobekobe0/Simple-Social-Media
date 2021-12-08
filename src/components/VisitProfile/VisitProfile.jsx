@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import './profile.css'
 import { useHistory } from 'react-router-dom'
-import Userinfo from './UserInfo/Userinfo'
 import { db } from '../../firebase'
 import { useAuth } from '../../context/authContext'
-import ProfileNav from './profileNav/ProfileNav'
-import { Switch, Route } from 'react-router-dom'
-import Posts from './posts/Posts'
-import Likes from './Likes/Likes'
-import Saves from './Saves/Saves'
+import '../profile/profile.css'
+import { useLocation } from 'react-router'
+import Posts from '../profile/posts/Posts'
 import PrivateRoute from '../PrivateRoute'
+import Userinfo from '../profile/UserInfo/Userinfo'
 
-function Profile() {
+function VisitProfile(props) {
     const history = useHistory()
     const [userInfo, setUserInfo] = useState('')
     const [bio, setBio] = useState('')
@@ -23,13 +20,15 @@ function Profile() {
     const [profilePicture, setProfilePicture] = useState('')
     const [saves, setSaves] = useState([])
     const [username, setUsername] = useState('')
-    const { currentUser } = useAuth()
+    const { currentUser, visit } = useAuth()
+    const location = useLocation()
+    const UserID = location.pathname.replace('/visit/', '')
 
     const getUserInfo = async () => {
         let userTemp = {}
         await db
             .collection('users')
-            .doc(currentUser.uid)
+            .doc(UserID)
             .get()
             .then((res) => {
                 userTemp = res.data()
@@ -48,6 +47,7 @@ function Profile() {
         setUsername(userTemp.username)
     }
 
+    console.log(UserID)
     useEffect(() => {
         getUserInfo()
     }, [])
@@ -60,33 +60,12 @@ function Profile() {
                     username={username}
                     followers={followers}
                     following={following}
-                    visit={false}
+                    visit={true}
                 />
-                <ProfileNav />
-                <hr className="hrProfile" />
-
-                <PrivateRoute path="/profile/likes">
-                    <Likes likes={likes} />
-                </PrivateRoute>
-
-                <PrivateRoute path="/profile/saves">
-                    <Saves saves={saves} />
-                </PrivateRoute>
-
-                <PrivateRoute exact path="/profile">
-                    <Posts posts={posts} />
-                </PrivateRoute>
-                <div
-                    style={{
-                        height: '100px',
-                        width: '100vw',
-                        backgroundColor: 'lighttomato',
-                        marginTop: '3rem',
-                    }}
-                ></div>
+                <Posts posts={posts} />
             </div>
         </div>
     )
 }
 
-export default Profile
+export default VisitProfile

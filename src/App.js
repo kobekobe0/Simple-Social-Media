@@ -15,6 +15,7 @@ import { AuthProvider } from './context/authContext'
 import PrivateRoute from './components/PrivateRoute'
 import Profile from './components/profile/Profile'
 import TopNav from './components/home/TopNav'
+import VisitProfile from './components/VisitProfile/VisitProfile.jsx'
 
 function App() {
     return (
@@ -26,6 +27,10 @@ function App() {
                     <Route path="/signup" component={Signup} />
                     <PrivateRoute exact path="/" component={Home} />
                     <PrivateRoute path="/profile" component={Profile} />
+                    <PrivateRoute
+                        path="/visit/:user_id"
+                        component={VisitProfile}
+                    />
                 </Switch>
             </div>
         </AuthProvider>

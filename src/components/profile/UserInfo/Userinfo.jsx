@@ -7,38 +7,79 @@ import EditProfile from './EditProfile'
 import { storagee } from '../../../firebase'
 import { useAuth } from '../../../context/authContext'
 import { getStorage, ref, deleteObject } from 'firebase/storage'
+import firebase from '@firebase/app-compat'
+import { RiUserFollowLine, RiUserUnfollowLine } from 'react-icons/ri'
+import { HiUserRemove, HiUserAdd } from 'react-icons/hi'
+import { AiOutlineUserAdd } from 'react-icons/ai'
+import { useLocation } from 'react-router'
 
 function Userinfo(props) {
     const { currentUser } = useAuth()
     const [followers, setFollowers] = useState([])
     const [following, setFollowing] = useState([])
+    const [followed, setFollowed] = useState(false)
+    const [trigger, setTrigger] = useState(0)
     const [followerShow, setFollowerShow] = React.useState(false)
     const [followingShow, setFollowingShow] = React.useState(false)
     const [editProfileShow, setEditProfileShow] = React.useState(false)
     const [pfpUpload, setPfpUpload] = useState('')
     const tempStore = storagee
+    const location = useLocation()
     const storage = getStorage()
 
-    const updatePfp = (e) => {
-        e.preventDefault()
+    const follow = async () => {
+        const UserID = location.pathname.replace('/visit/', '')
+        await db
+            .collection('users')
+            .doc(currentUser.uid)
+            .update({
+                following: firebase.firestore.FieldValue.arrayUnion(UserID),
+            })
 
-        const pfpRef = ref(storage, `pfp/${currentUser.uid}pfp`)
-        deleteObject(pfpRef)
+        await db
+            .collection('users')
+            .doc(UserID)
+            .update({
+                followers: firebase.firestore.FieldValue.arrayUnion(
+                    currentUser.uid
+                ),
+            })
+        setTrigger(trigger + 1)
+    }
+    const unfollow = async () => {
+        const UserID = location.pathname.replace('/visit/', '')
+        await db
+            .collection('users')
+            .doc(currentUser.uid)
+            .update({
+                following: firebase.firestore.FieldValue.arrayRemove(UserID),
+            })
 
-        const addNewPfp = async () => {
-            const tempStoreRef = tempStore.ref()
-            const fileRef = tempStoreRef.child(`pfp/${currentUser.uid}pfp`)
-            await fileRef.put(pfpUpload)
-        }
-        addNewPfp().then(() => {
-            window.location.reload(false)
-        })
+        await db
+            .collection('users')
+            .doc(UserID)
+            .update({
+                followers: firebase.firestore.FieldValue.arrayRemove(
+                    currentUser.uid
+                ),
+            })
+        setTrigger(trigger + 1)
+    }
+
+    const checkFollow = async () => {
+        const UserID = location.pathname.replace('/visit/', '')
+        const check = await db.collection('users').doc(UserID).get()
+
+        check.data().followers.includes(currentUser.uid)
+            ? setFollowed(true)
+            : setFollowed(false)
     }
 
     useEffect(() => {
         setFollowing(props.following)
         setFollowers(props.followers)
-    }, [props.following])
+        checkFollow()
+    }, [props.following, trigger])
 
     return (
         <div className="profileHeader">
@@ -58,7 +99,9 @@ function Userinfo(props) {
                     <img src={props.profileImage} alt="" />
                 </div>
                 <div className="profileStat">
-                    <p className="profileUsername">{currentUser.displayName}</p>
+                    <p className="profileUsername">
+                        {props.visit ? props.username : currentUser.displayName}
+                    </p>
                     <div className="follows">
                         <p onClick={() => setFollowerShow(true)}>
                             <strong>
@@ -76,21 +119,50 @@ function Userinfo(props) {
                             followers={followers}
                             open={followerShow}
                             close={() => setFollowerShow(false)}
+                            trigger={trigger}
                         />
                         <Follows
                             following={following}
                             open={followingShow}
                             close={() => setFollowingShow(false)}
+                            trigger={trigger}
                         />
                     </div>
                 </div>
                 <div className="profileButton">
-                    <button
-                        style={{ border: 'none', backgroundColor: 'white' }}
-                        onClick={() => setEditProfileShow(true)}
-                    >
-                        <BiEdit size={40} />
-                    </button>
+                    {props.visit ? (
+                        followed ? (
+                            <button
+                                style={{
+                                    border: 'none',
+                                    backgroundColor: 'white',
+                                }}
+                                onClick={() => setEditProfileShow(true)}
+                                onClick={unfollow}
+                            >
+                                <HiUserRemove size={40} color="red" />
+                            </button>
+                        ) : (
+                            <button
+                                style={{
+                                    border: 'none',
+                                    backgroundColor: 'white',
+                                }}
+                                onClick={() => setEditProfileShow(true)}
+                                onClick={follow}
+                            >
+                                <HiUserAdd size={40} color="skyBlue" />
+                            </button>
+                        )
+                    ) : (
+                        <button
+                            style={{ border: 'none', backgroundColor: 'white' }}
+                            onClick={() => setEditProfileShow(true)}
+                        >
+                            <BiEdit size={40} />
+                        </button>
+                    )}
+
                     <EditProfile
                         open={editProfileShow}
                         close={() => setEditProfileShow(false)}

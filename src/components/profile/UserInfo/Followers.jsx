@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react'
 import reactDom from 'react-dom'
 import { db } from '../../../firebase'
 import { AiOutlineClose } from 'react-icons/ai'
+import { useAuth } from '../../../context/authContext'
+import { useLocation, Link } from 'react-router-dom'
 
 const MODAL_STYLE = {
     position: 'fixed',
@@ -57,6 +59,12 @@ function Followers(props) {
     const [following, setFollowing] = useState([])
     const [renderFollowing, setRenderFollowing] = useState([])
     const userRef = db.collection('users')
+    const { setVisit } = useAuth()
+    const history = useLocation()
+
+    const VisitProfile = (user) => {
+        setVisit(user)
+    }
 
     const getFollowing = async () => {
         let followingPromise = []
@@ -77,7 +85,9 @@ function Followers(props) {
     useEffect(() => {
         setFollowing(props.followers)
         console.log(props.followers)
-    }, [props.followers])
+    }, [props.followers, props.trigger])
+
+    console.log(renderFollowing)
 
     useEffect(() => {
         getFollowing().catch((err) => console.log(err))
@@ -103,17 +113,26 @@ function Followers(props) {
                 <div style={BODY_STYLE}>
                     {renderFollowing != null
                         ? renderFollowing.map((res) => (
-                              <div style={LIST_STYLE}>
-                                  <img
-                                      src={res.profilePicture}
-                                      style={{
-                                          width: '50px',
-                                          height: '50px',
-                                          marginRight: '1rem',
-                                      }}
-                                  />
-                                  <p>{res.username}</p>
-                              </div>
+                              <Link
+                                  onClick={
+                                      (() => VisitProfile(res.userId),
+                                      window.location.reload())
+                                  }
+                                  to={`visit/${res.userId}`}
+                              >
+                                  {' '}
+                                  <div style={LIST_STYLE}>
+                                      <img
+                                          src={res.profilePicture}
+                                          style={{
+                                              width: '50px',
+                                              height: '50px',
+                                              marginRight: '1rem',
+                                          }}
+                                      />
+                                      <p>{res.username}</p>
+                                  </div>
+                              </Link>
                           ))
                         : null}
                 </div>
