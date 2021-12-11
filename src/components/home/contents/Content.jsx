@@ -171,8 +171,9 @@ function Content() {
                 <CardContent
                     userProfilePicture={getPfp}
                     description={res.description}
+                    dateCreated={res.dateCreated}
                     postedImage={res.imgUrl}
-                    likes={res.likes.length}
+                    likes={res.likes}
                     userName={res.userName}
                     documentID={res.documentId}
                     userId={res.userId}

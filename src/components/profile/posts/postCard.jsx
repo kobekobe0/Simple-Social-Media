@@ -6,12 +6,7 @@ function PostCard(props) {
 
     return (
         <div className="postCard">
-            <img
-                src={props.img}
-                style={{ width: '300px' }}
-                alt=""
-                onClick={() => setModalShow(true)}
-            />
+            <img src={props.img} alt="" onClick={() => setModalShow(true)} />
             <PostModal
                 open={modalShow}
                 close={() => setModalShow(false)}

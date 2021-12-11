@@ -18,7 +18,7 @@ const MODAL_STYLE = {
     display: 'flex',
     flexDirection: 'column',
     borderRadius: '10px',
-    height: '50vh',
+    height: '500px',
     width: '400px',
     boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
     maxWidth: '90vw',

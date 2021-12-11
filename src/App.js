@@ -17,6 +17,8 @@ import Profile from './components/profile/Profile'
 import TopNav from './components/home/TopNav'
 import VisitProfile from './components/VisitProfile/VisitProfile.jsx'
 import Search from './components/home/contents/Search'
+import Forgot from './components/Forgot'
+import ResetSuccess from './components/ResetSuccess'
 
 function App() {
     return (
@@ -26,6 +28,8 @@ function App() {
                 <Switch>
                     <Route path="/login" component={Login} />
                     <Route path="/signup" component={Signup} />
+                    <Route path="/reset" component={Forgot} />
+                    <Route path="/check-email" component={ResetSuccess} />
                     <PrivateRoute exact path="/" component={Home} />
                     <PrivateRoute path="/profile" component={Profile} />
                     <PrivateRoute path="/search" component={Search} />

@@ -80,14 +80,7 @@ function Profile() {
                 <PrivateRoute exact path="/profile">
                     <Posts posts={posts} visit={false} />
                 </PrivateRoute>
-                <div
-                    style={{
-                        height: '100px',
-                        width: '100vw',
-                        backgroundColor: 'lighttomato',
-                        marginTop: '3rem',
-                    }}
-                ></div>
+                <hr />
             </div>
         </div>
     )

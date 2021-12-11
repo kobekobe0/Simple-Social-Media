@@ -28,21 +28,21 @@ function Nav(props) {
                 <img
                     src={currentUser.photoURL}
                     style={{
-                        width: '50px',
-                        borderRadius: '25px',
-                        height: '50px',
+                        width: '80px',
+                        borderRadius: '40px',
+                        height: '80px',
                         objectFit: 'cover',
                     }}
                 />
                 <h3 className="username">{currentUser.displayName}</h3>
             </div>
-
+            <hr />
             <button
                 className="profileBtn"
                 onClick={() => props.changeDisplay(2)}
             >
                 <p className="navButtonText">Home</p>
-                <RiHomeLine size={20} />
+                <RiHomeLine size={20} className="btnlogo" />
             </button>
             <button className="homeBtn" onClick={goToProfile}>
                 <p className="navButtonText">Profile</p>
@@ -50,36 +50,25 @@ function Nav(props) {
             </button>
             <button className="searchBtn" onClick={goToSearch}>
                 <p className="navButtonText">People</p>
-                <BiSearch size={20} />
+                <BiSearch className="btnlogo" size={20} />
             </button>
-            <button
-                onClick={() => props.changeDisplay(1)}
-                className="messageBtn"
-            >
-                <p className="navButtonText">Messages</p>
-                <BiMessageAlt size={20} />
-            </button>
+
             <button className="logoutBtn" onClick={logout}>
                 <p className="navButtonText">Logout</p>
-                <FiLogOut size={20} />
+                <FiLogOut className="btnlogo" size={20} />
             </button>
             <hr />
 
-            <>
-                <button
-                    className="landfillBtn"
-                    onClick={() => props.changeDisplay(2)}
-                >
-                    <MdLandscape size={40} />
-                </button>
+            <button
+                className="landfillBtn"
+                onClick={() => props.changeDisplay(2)}
+            >
+                <MdLandscape size={40} />
+            </button>
 
-                <button
-                    className="binBtn"
-                    onClick={() => props.changeDisplay(3)}
-                >
-                    <FaDumpster size={40} />
-                </button>
-            </>
+            <button className="binBtn" onClick={() => props.changeDisplay(3)}>
+                <FaDumpster size={40} />
+            </button>
         </nav>
     )
 }

@@ -39,6 +39,9 @@ function Login() {
                         placeholder="password"
                         onChange={(e) => setPassword(e.target.value)}
                     />
+                    <p style={{ fontSize: '10px' }}>
+                        <Link to="/reset">forgot password?</Link>
+                    </p>
                     <button id="login">Login</button>
                 </form>
                 <p>

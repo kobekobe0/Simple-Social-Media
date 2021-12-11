@@ -21,6 +21,7 @@ const MODAL_STYLE = {
     flexDirection: 'column',
     borderRadius: '10px',
     maxHeight: '90vh',
+    maxWidth: '90vw',
     boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)',
 }
 

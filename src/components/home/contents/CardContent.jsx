@@ -9,6 +9,7 @@ import firebase from '@firebase/app-compat'
 import Popoverr from './Popover'
 import { Link, useLocation } from 'react-router-dom'
 import { db } from '../../../firebase'
+import LikeModal from './LikeModal'
 
 function CardContent(props) {
     const { currentUser, setVisit } = useAuth()
@@ -22,6 +23,8 @@ function CardContent(props) {
     const [reverse, setReverse] = useState(props.reverse)
     const userRef = db.collection('users')
     const location = useLocation()
+    const [likeShow, setLikeShow] = React.useState(false)
+    const [trigger, setTrigger] = useState(0)
 
     const VisitProfile = (user) => {
         setVisit(user)
@@ -178,7 +181,7 @@ function CardContent(props) {
                 <div className="likes">
                     {!toggleLike ? (
                         <button
-                            style={{ border: 'none', backgroundColor: 'snow' }}
+                            style={{ border: 'none', backgroundColor: 'white' }}
                             onClick={
                                 (props.likes + 1,
                                 () => like(props.documentID, props.postRef))
@@ -191,7 +194,7 @@ function CardContent(props) {
                             onClick={() =>
                                 unlike(props.documentID, props.postRef)
                             }
-                            style={{ border: 'none', backgroundColor: 'snow' }}
+                            style={{ border: 'none', backgroundColor: 'white' }}
                         >
                             <AiFillHeart
                                 size={30}
@@ -200,7 +203,23 @@ function CardContent(props) {
                         </button>
                     )}
 
-                    <p className="likeCounter">{likes}</p>
+                    <p
+                        onClick={() => setLikeShow(true)}
+                        style={{ cursor: 'pointer' }}
+                        className="likeCounter"
+                    >
+                        {likes.length}{' '}
+                        <span style={{ color: 'black', fontSize: '10px' }}>
+                            view
+                        </span>
+                    </p>
+
+                    <LikeModal
+                        likes={likes}
+                        open={likeShow}
+                        close={() => setLikeShow(false)}
+                        trigger={trigger}
+                    />
                 </div>
 
                 <div className="comments">
@@ -224,7 +243,7 @@ function CardContent(props) {
                         <button
                             style={{
                                 border: 'none',
-                                backgroundColor: 'snow',
+                                backgroundColor: 'white',
                                 marginLeft: '2rem',
                             }}
                             onClick={() =>

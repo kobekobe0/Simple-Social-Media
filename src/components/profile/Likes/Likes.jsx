@@ -47,7 +47,7 @@ function Likes(props) {
     }, [likes])
 
     return (
-        <div className="contents" style={{ width: '70%' }}>
+        <div className="contents" style={{ width: '100%' }}>
             {renderLikes
                 .filter((post) => {
                     return post !== undefined
@@ -61,7 +61,7 @@ function Likes(props) {
                             userProfilePicture={getPfp}
                             description={res.description}
                             postedImage={res.imgUrl}
-                            likes={res.likes.length}
+                            likes={res.likes}
                             userName={res.userName}
                             documentID={res.documentID}
                             userId={res.userId}

@@ -33,6 +33,7 @@
     width: 40px;
     margin-right: 1rem;
 }
+
 .card-header-image_edit button {
     border: none;
     outline: none;
@@ -47,16 +48,27 @@
     max-height: 70vh;
     object-fit: cover;
 }
+
 .card-image_username img {
     width: 50px;
     height: 50px;
     object-fit: cover;
     border-radius: 50px;
 }
+
 .card-image_username p {
     margin: 0;
 }
-
+@media only screen and (min-width: 320px) and (max-width: 979px) {
+    .card-image_username img {
+        width: 30px;
+        height: 30px;
+        margin-right: 0.5rem;
+    }
+    .card-image_username p {
+        font-size: 12px;
+    }
+}
 .likes {
     display: flex;
     align-items: center;

@@ -125,7 +125,7 @@
 }
 
 .postWrapper .postCard img {
-    width: 250px;
+    width: 300px;
     height: 250px;
     object-fit: cover;
     transition: all 0.2s;
@@ -138,4 +138,63 @@
 
 .modalCloseBtn:hover {
     cursor: pointer;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 979px) {
+    .profileWrapper {
+        width: 100vw;
+    }
+    .profileHeader {
+        width: 100vw;
+        height: auto;
+    }
+    .profileHeader .banner {
+        width: 100vw;
+        height: auto;
+    }
+    .profileHeader .banner img {
+        width: 100vw;
+        height: 250px;
+        border-radius: 0;
+    }
+    .profileHeader h1 {
+        font-size: 2.5rem;
+    }
+    .profileHeader .profileInfo .profileImg {
+        width: 100px;
+        height: 100px;
+    }
+    .profileHeader .profileInfo .profileStat .profileUsername {
+        font-size: 2rem;
+    }
+    .postBlock {
+        width: 100vw;
+        background-color: rgba(243, 243, 243, 0.281);
+        justify-content: center;
+        display: flex;
+    }
+    .postWrapper {
+        width: 100vw;
+        grid-gap: 1rem;
+        grid-template-columns: repeat(1, 1fr);
+        margin-top: 1rem;
+    }
+    .postWrapper .postCard {
+        display: flex;
+        justify-content: center;
+    }
+    .profileNav {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 100%;
+        margin: 0;
+    }
+    .hrProfile {
+        display: none;
+    }
+
+    .profileHeader .profileInfo {
+        border-radius: 0;
+    }
 }
