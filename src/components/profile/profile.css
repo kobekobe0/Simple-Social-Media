@@ -197,4 +197,8 @@
     .profileHeader .profileInfo {
         border-radius: 0;
     }
+    .profileHeader .profileInfo .profileImg img {
+        width: 100px;
+        height: 100px;
+    }
 }
