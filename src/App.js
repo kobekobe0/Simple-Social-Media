@@ -16,6 +16,7 @@ import PrivateRoute from './components/PrivateRoute'
 import Profile from './components/profile/Profile'
 import TopNav from './components/home/TopNav'
 import VisitProfile from './components/VisitProfile/VisitProfile.jsx'
+import Search from './components/home/contents/Search'
 
 function App() {
     return (
@@ -27,6 +28,7 @@ function App() {
                     <Route path="/signup" component={Signup} />
                     <PrivateRoute exact path="/" component={Home} />
                     <PrivateRoute path="/profile" component={Profile} />
+                    <PrivateRoute path="/search" component={Search} />
                     <PrivateRoute
                         path="/visit/:user_id"
                         component={VisitProfile}

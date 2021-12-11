@@ -205,7 +205,7 @@ function PostModal(props) {
                     style={{
                         width: 'auto',
                         maxHeight: '60vh',
-                        objectFit: 'contain',
+                        objectFit: 'cover',
                     }}
                 />
 

@@ -10,6 +10,7 @@ import Posts from './posts/Posts'
 import Likes from './Likes/Likes'
 import Saves from './Saves/Saves'
 import PrivateRoute from '../PrivateRoute'
+import { useLocation } from 'react-router'
 
 function Profile() {
     const history = useHistory()
@@ -24,6 +25,8 @@ function Profile() {
     const [saves, setSaves] = useState([])
     const [username, setUsername] = useState('')
     const { currentUser } = useAuth()
+    const location = useLocation()
+    const UserID = location.pathname.replace('/visit/', '')
 
     const getUserInfo = async () => {
         let userTemp = {}
@@ -51,6 +54,7 @@ function Profile() {
     useEffect(() => {
         getUserInfo()
     }, [])
+
     return (
         <div className="profile">
             <div className="profileWrapper">
@@ -74,7 +78,7 @@ function Profile() {
                 </PrivateRoute>
 
                 <PrivateRoute exact path="/profile">
-                    <Posts posts={posts} />
+                    <Posts posts={posts} visit={false} />
                 </PrivateRoute>
                 <div
                     style={{

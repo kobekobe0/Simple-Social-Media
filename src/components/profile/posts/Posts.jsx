@@ -36,7 +36,10 @@ function Posts(props) {
 
     console.log(renderPost)
     return (
-        <div className="postBlock">
+        <div
+            className="postBlock"
+            style={{ marginTop: props.visit ? '2rem' : 'unset' }}
+        >
             <div className="postWrapper">
                 {renderPost != []
                     ? renderPost

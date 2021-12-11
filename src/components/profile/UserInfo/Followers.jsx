@@ -60,7 +60,9 @@ function Followers(props) {
     const [renderFollowing, setRenderFollowing] = useState([])
     const userRef = db.collection('users')
     const { setVisit } = useAuth()
-    const history = useLocation()
+    const { currentUser } = useAuth()
+    const location = useLocation()
+    const UserID = location.pathname.replace('/visit/', '')
 
     const VisitProfile = (user) => {
         setVisit(user)
@@ -87,8 +89,6 @@ function Followers(props) {
         console.log(props.followers)
     }, [props.followers, props.trigger])
 
-    console.log(renderFollowing)
-
     useEffect(() => {
         getFollowing().catch((err) => console.log(err))
     }, [following])
@@ -112,28 +112,69 @@ function Followers(props) {
                 <hr style={{ margin: '0' }} />
                 <div style={BODY_STYLE}>
                     {renderFollowing != null
-                        ? renderFollowing.map((res) => (
-                              <Link
-                                  onClick={
-                                      (() => VisitProfile(res.userId),
-                                      window.location.reload())
-                                  }
-                                  to={`visit/${res.userId}`}
-                              >
-                                  {' '}
-                                  <div style={LIST_STYLE}>
-                                      <img
-                                          src={res.profilePicture}
-                                          style={{
-                                              width: '50px',
-                                              height: '50px',
-                                              marginRight: '1rem',
-                                          }}
-                                      />
-                                      <p>{res.username}</p>
-                                  </div>
-                              </Link>
-                          ))
+                        ? renderFollowing.map((res) =>
+                              props.visit ? (
+                                  <Link
+                                      onClick={
+                                          (() => VisitProfile(res.userId),
+                                          props.close)
+                                      }
+                                      to={`${res.userId}`}
+                                      style={{
+                                          textDecoration: 'none',
+                                          color: 'black',
+                                      }}
+                                  >
+                                      {' '}
+                                      <div style={LIST_STYLE}>
+                                          <img
+                                              src={res.profilePicture}
+                                              style={{
+                                                  width: '50px',
+                                                  height: '50px',
+                                                  marginRight: '1rem',
+                                              }}
+                                          />
+                                          <p
+                                              style={{
+                                                  color: 'black',
+                                                  alignSelf: 'center',
+                                                  margin: '0',
+                                              }}
+                                          >
+                                              {res.username}
+                                          </p>
+                                      </div>
+                                  </Link>
+                              ) : (
+                                  <Link
+                                      onClick={() => VisitProfile(res.userId)}
+                                      to={`visit/${res.userId}`}
+                                      style={{ textDecoration: 'none' }}
+                                  >
+                                      {' '}
+                                      <div style={LIST_STYLE}>
+                                          <img
+                                              src={res.profilePicture}
+                                              style={{
+                                                  width: '50px',
+                                                  height: '50px',
+                                                  marginRight: '1rem',
+                                              }}
+                                          />
+                                          <p
+                                              style={{
+                                                  color: 'black',
+                                                  alignSelf: 'center',
+                                                  margin: '0',
+                                              }}
+                                          >
+                                              {res.username}
+                                          </p>
+                                      </div>
+                                  </Link>
+                              )
+                          )
                         : null}
                 </div>
             </div>

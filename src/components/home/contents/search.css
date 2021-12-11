@@ -1,0 +1,69 @@
+.search {
+    width: 100vw;
+    display: flex;
+    height: 90vh;
+    margin-top: 2rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+.searchWrapper {
+    width: 500px;
+    height: 100vh;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.searchForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.searchForm input {
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(206, 206, 206);
+    color: rgb(0, 0, 0);
+    font-size: 1.5rem;
+    padding-left: 1rem;
+}
+
+.results {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.resultCard {
+    width: 70%;
+    height: 150px;
+    display: flex;
+    font-size: 25px;
+    align-items: center;
+    justify-content: flex-start;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-radius: 5px;
+}
+.resultCard:hover {
+    transform: scale(1.05);
+    background-color: rgb(219, 219, 219);
+}
+
+.resultCard img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50px;
+}
+.resultCard p {
+    margin-left: 2rem;
+}

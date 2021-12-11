@@ -63,6 +63,45 @@
     justify-content: flex-end;
     margin-top: 0;
 }
+.nav .searchBtn {
+    border: 0;
+    padding: 0.5rem;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    transition: all 0.2s;
+    color: rgb(120, 134, 35);
+    text-align: end;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 0;
+}
+.nav .landfillBtn {
+    border: 0;
+    padding: 0.5rem;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    transition: all 0.2s;
+    color: rgb(66, 66, 66);
+    text-align: end;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0;
+}
+.nav .binBtn {
+    border: 0;
+    padding: 0.5rem;
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    transition: all 0.2s;
+    color: rgb(66, 66, 66);
+    text-align: end;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0;
+}
 .navButtonText {
     margin: 0;
     padding-right: 10px;
@@ -83,4 +122,14 @@
 .nav .profileBtn:hover {
     background-color: rgb(85, 144, 255);
     color: white;
+}
+.nav .searchBtn:hover {
+    background-color: rgb(120, 134, 35);
+    color: white;
+}
+.nav .landfillBtn:hover {
+    color: rgb(65, 41, 41);
+}
+.nav .binBtn:hover {
+    color: rgb(65, 41, 41);
 }

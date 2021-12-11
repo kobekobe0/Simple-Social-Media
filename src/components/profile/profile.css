@@ -120,8 +120,10 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-auto-rows: auto;
-    grid-gap: 2rem;
+    grid-gap: 3rem;
+    width: 100%;
 }
+
 .postWrapper .postCard img {
     width: 250px;
     height: 250px;

@@ -16,10 +16,14 @@ function Signup() {
     const [imgUrl, setImgUrl] = useState('')
     const history = useHistory()
     const [imgError, setImgError] = useState(false)
+    const [disable, setDisable] = useState(false)
+    const [checkPassword, setCheckPassword] = useState(false)
+    const [checkEmail, setCheckEmail] = useState(false)
     const tempStore = storagee
 
     const SignUp = async (e) => {
         e.preventDefault()
+        setDisable(true)
 
         const createDocument = (userId, url) => {
             db.collection('users').doc(userId).set({
@@ -38,7 +42,7 @@ function Signup() {
 
         const signupTemp = async () => {
             profileImg.type.includes('image')
-                ? password == confirmPassword && username
+                ? password == confirmPassword
                     ? auth
                           .createUserWithEmailAndPassword(email, password)
                           .then(async (res) => {
@@ -61,7 +65,11 @@ function Signup() {
                                   console.log(err)
                               }
                           })
-                    : console.log('checkpass')
+                          .catch((err) => {
+                              setCheckEmail(true)
+                              setDisable(false)
+                          })
+                    : setCheckPassword(true) && setDisable(false)
                 : setImgError(true)
         }
         signupTemp()
@@ -113,12 +121,40 @@ function Signup() {
                             Please select image file
                         </p>
                     ) : null}
+                    {checkPassword ? (
+                        <p
+                            style={{
+                                color: 'red',
+                                margin: '0',
+                                justifySelf: 'center',
+                                textAlign: 'center',
+                                fontSize: '0.8rem',
+                            }}
+                        >
+                            Password does not match
+                        </p>
+                    ) : null}
+                    {checkEmail ? (
+                        <p
+                            style={{
+                                color: 'red',
+                                margin: '0',
+                                justifySelf: 'center',
+                                textAlign: 'center',
+                                fontSize: '0.8rem',
+                            }}
+                        >
+                            Email is already in use
+                        </p>
+                    ) : null}
                     <input
                         type="file"
                         onChange={(e) => setProfileImg(e.target.files[0])}
                     />
 
-                    <button id="signup">Signup</button>
+                    <button id="signup" disabled={disable}>
+                        {disable ? 'Signing up...' : 'Signup'}
+                    </button>
                 </form>
                 <p>
                     Already have an account? <Link to="/login">Login</Link>

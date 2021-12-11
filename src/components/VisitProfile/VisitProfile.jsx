@@ -7,6 +7,7 @@ import { useLocation } from 'react-router'
 import Posts from '../profile/posts/Posts'
 import PrivateRoute from '../PrivateRoute'
 import Userinfo from '../profile/UserInfo/Userinfo'
+import Profile from '../profile/Profile'
 
 function VisitProfile(props) {
     const history = useHistory()
@@ -22,7 +23,7 @@ function VisitProfile(props) {
     const [username, setUsername] = useState('')
     const { currentUser, visit } = useAuth()
     const location = useLocation()
-    const UserID = location.pathname.replace('/visit/', '')
+    const UserID = location.pathname.replace('/visit/', '') //removes vist params in url to extract the uid
 
     const getUserInfo = async () => {
         let userTemp = {}
@@ -50,7 +51,12 @@ function VisitProfile(props) {
     console.log(UserID)
     useEffect(() => {
         getUserInfo()
-    }, [])
+    }, [location.pathname])
+    if (UserID === currentUser.uid) {
+        history.push('/profile')
+        return <Profile />
+    }
+
     return (
         <div className="profile">
             <div className="profileWrapper">
@@ -62,7 +68,16 @@ function VisitProfile(props) {
                     following={following}
                     visit={true}
                 />
-                <Posts posts={posts} />
+                <Posts posts={posts} visit={true} />
+
+                <div
+                    style={{
+                        height: '100px',
+                        width: '100vw',
+                        backgroundColor: 'lighttomato',
+                        marginTop: '3rem',
+                    }}
+                ></div>
             </div>
         </div>
     )

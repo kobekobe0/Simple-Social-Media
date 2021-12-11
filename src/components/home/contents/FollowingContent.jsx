@@ -8,16 +8,13 @@ import { useAuth } from '../../../context/authContext'
 import firebase from '@firebase/app-compat'
 import Compressor from 'compressorjs'
 
-function Content() {
+function FollowingContent() {
     const { currentUser } = useAuth()
     const storage = getStorage()
     const tempStore = storagee
     const postRef = db.collection('posts')
     const userRef = db.collection('users')
-    const displayPostRef = db
-        .collection('posts')
-        .orderBy('dateCreated', 'desc')
-        .limit(5)
+
     const [upload, setUpload] = useState('')
     const [contents, setContents] = useState([])
     const [fileUrl, setFileUrl] = useState('')
@@ -26,8 +23,14 @@ function Content() {
     const [documentID, setDocumentID] = useState([])
     const [lastLink, setLastLink] = useState({})
     const [snapshott, setSnapshott] = useState('')
+    const [following, setFollowing] = useState([])
 
-    const [compressedFile, setCompressedFile] = useState(null)
+    const queryFollowings = async () => {
+        const following = await userRef.doc(currentUser.uid).get()
+        const followingArray = following.data().following
+        setFollowing(followingArray)
+        console.log(followingArray)
+    }
 
     const handleUpload = (e) => {
         const image = e.target.files[0]
@@ -89,64 +92,34 @@ function Content() {
     }
 
     const getData = async () => {
-        const snapshot = await displayPostRef.get()
-        const last = snapshot.docs[snapshot.docs.length - 1]
-        setSnapshott(last)
-        console.log(last.data())
-        const contentsToSet = []
+        let temps = []
 
-        snapshot.forEach((doc) =>
-            contentsToSet.push({
-                documentId: doc.id,
-                ...doc.data(),
-            })
+        await Promise.all(
+            following.map(
+                async (following) =>
+                    await postRef
+                        .where('userId', '==', following)
+                        .limit(4)
+                        .get()
+                        .then((snapshot) => {
+                            snapshot.forEach((doc) => {
+                                temps.push(doc.data())
+                                console.log(temps)
+                            })
+                        })
+            )
         )
-        setContents(contentsToSet)
+
+        Promise.resolve(setContents(temps))
     }
-
-    const getNextData = async () => {
-        const next = await db
-            .collection('posts')
-            .orderBy('dateCreated', 'desc')
-            .startAfter(snapshott.data().dateCreated)
-            .limit(5)
-            .get()
-
-        const last = next.docs[next.docs.length - 1]
-        setSnapshott(last)
-
-        const contentsToSet = []
-
-        next.forEach((doc) =>
-            contentsToSet.push({
-                documentId: doc.id,
-                ...doc.data(),
-            })
-        )
-        Promise.all(contentsToSet).then((res) => {
-            let temp = []
-            res.forEach((item) => {
-                temp.push(item)
-            })
-            setContents([...contents, ...temp])
-            setLastLink(contents.at(-1))
-        })
-    }
-
-    console.log(contents)
 
     useEffect(() => {
-        setContents([])
         getData()
-        console.log('reload')
-        console.log(firebase.firestore.Timestamp.now().toDate())
-        setLastLink(contents.at(-1))
-        console.log(lastLink)
-    }, [temp])
+    }, [following])
 
     useEffect(() => {
-        console.log(lastLink)
-    }, [lastLink])
+        queryFollowings()
+    }, [])
 
     const getPfp = async (userId) => {
         const images = app.storage().ref().child(`pfp/${userId}pfp`)
@@ -167,40 +140,29 @@ function Content() {
                 <input type="file" accept="image/" onChange={handleUpload} />
                 <button onClick={handlePost}>Post</button>
             </div>
-            {contents.map((res) => (
-                <CardContent
-                    userProfilePicture={getPfp}
-                    description={res.description}
-                    postedImage={res.imgUrl}
-                    likes={res.likes.length}
-                    userName={res.userName}
-                    documentID={res.documentId}
-                    userId={res.userId}
-                    postRef={postRef}
-                    ifLiked={res.likes.includes(currentUser.uid)}
-                    ifSaved={res.saves.includes(currentUser.uid)}
-                    reload={setTemp}
-                    reloader={temp}
-                    comments={res.comments.length}
-                />
-            ))}
-            <button
-                onClick={getNextData}
-                style={{
-                    width: '100px',
-                    alignSelf: 'center',
-                    marginBottom: '1rem',
-                    border: 'none',
-                    borderRadius: '10px',
-                    paddingLeft: '2rem',
-                    paddingRight: '2rem',
-                    fontSize: '12px',
-                }}
-            >
-                Load More
-            </button>
+            {contents
+                .sort((a, b) => {
+                    return a.dateCreated > b.dateCreated ? -1 : 1
+                })
+                .map((res) => (
+                    <CardContent
+                        userProfilePicture={getPfp}
+                        description={res.description}
+                        postedImage={res.imgUrl}
+                        likes={res.likes.length}
+                        userName={res.userName}
+                        documentID={res.documentId}
+                        userId={res.userId}
+                        postRef={postRef}
+                        ifLiked={res.likes.includes(currentUser.uid)}
+                        ifSaved={res.saves.includes(currentUser.uid)}
+                        reload={setTemp}
+                        reloader={temp}
+                        comments={res.comments.length}
+                    />
+                ))}
         </main>
     )
 }
 
-export default Content
+export default FollowingContent

@@ -5,6 +5,7 @@ import Preview from './preview/Preview'
 import Message from '../message/Message'
 import Profile from '../profile/Profile'
 import TopNav from './TopNav'
+import FollowingContent from './contents/FollowingContent'
 function Home() {
     const [render, setRender] = useState(2)
     return (
@@ -12,6 +13,7 @@ function Home() {
             <div className="wrapper">
                 {render == 2 ? <Content /> : null}
                 {render == 1 ? <Message /> : null}
+                {render == 3 ? <FollowingContent /> : null}
                 <Nav changeDisplay={setRender} />
             </div>
         </div>

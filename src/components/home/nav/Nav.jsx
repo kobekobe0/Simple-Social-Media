@@ -4,15 +4,23 @@ import './nav.css'
 import { useHistory } from 'react-router-dom'
 import { RiHomeLine } from 'react-icons/ri'
 import { AiOutlineUser } from 'react-icons/ai'
-import { BiMessageAlt } from 'react-icons/bi'
+import { BiMessageAlt, BiSearch } from 'react-icons/bi'
 import { FiLogOut } from 'react-icons/fi'
+import { MdLandscape } from 'react-icons/md'
+import { FaDumpster } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 
 function Nav(props) {
     const { logout, currentUser } = useAuth()
     const history = useHistory()
+    const [futureUse, setFutureUse] = React.useState(false)
 
     const goToProfile = () => {
         history.push('/profile')
+    }
+
+    const goToSearch = () => {
+        history.push('/search')
     }
     return (
         <nav className="nav">
@@ -40,6 +48,10 @@ function Nav(props) {
                 <p className="navButtonText">Profile</p>
                 <AiOutlineUser size={20} />
             </button>
+            <button className="searchBtn" onClick={goToSearch}>
+                <p className="navButtonText">People</p>
+                <BiSearch size={20} />
+            </button>
             <button
                 onClick={() => props.changeDisplay(1)}
                 className="messageBtn"
@@ -51,6 +63,23 @@ function Nav(props) {
                 <p className="navButtonText">Logout</p>
                 <FiLogOut size={20} />
             </button>
+            <hr />
+
+            <>
+                <button
+                    className="landfillBtn"
+                    onClick={() => props.changeDisplay(2)}
+                >
+                    <MdLandscape size={40} />
+                </button>
+
+                <button
+                    className="binBtn"
+                    onClick={() => props.changeDisplay(3)}
+                >
+                    <FaDumpster size={40} />
+                </button>
+            </>
         </nav>
     )
 }

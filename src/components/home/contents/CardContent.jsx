@@ -7,11 +7,11 @@ import { BsFillBookmarkFill, BsBookmark } from 'react-icons/bs'
 import { useAuth } from '../../../context/authContext'
 import firebase from '@firebase/app-compat'
 import Popoverr from './Popover'
-
+import { Link, useLocation } from 'react-router-dom'
 import { db } from '../../../firebase'
 
 function CardContent(props) {
-    const { currentUser } = useAuth()
+    const { currentUser, setVisit } = useAuth()
     const [toggleLike, setToggleLike] = useState(props.ifLiked)
     const [toggleSave, setToggleSave] = useState(props.ifSaved)
     const [likes, setLikes] = useState(props.likes)
@@ -21,6 +21,11 @@ function CardContent(props) {
     const [temp, setTemp] = useState(false)
     const [reverse, setReverse] = useState(props.reverse)
     const userRef = db.collection('users')
+    const location = useLocation()
+
+    const VisitProfile = (user) => {
+        setVisit(user)
+    }
 
     useEffect(() => {
         const pfpTemp = props.userProfilePicture(props.userId)
@@ -106,8 +111,32 @@ function CardContent(props) {
             <div className="card-header">
                 <div className="card-header-image_edit">
                     <div className="card-image_username">
-                        <img src={pfp} className="user-profile-picture" />
-                        <p>{props.userName}</p>
+                        {location.pathname.includes('/profile') ? (
+                            <>
+                                <img
+                                    src={pfp}
+                                    className="user-profile-picture"
+                                />
+                                <p>{props.userName}</p>
+                            </>
+                        ) : (
+                            <Link
+                                onClick={() => VisitProfile(props.userId)}
+                                to={`visit/${props.userId}`}
+                                style={{
+                                    textDecoration: 'none',
+                                    color: 'black',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <img
+                                    src={pfp}
+                                    className="user-profile-picture"
+                                />
+                                <p style={{ margin: '0' }}>{props.userName}</p>
+                            </Link>
+                        )}
                     </div>
 
                     <Popoverr

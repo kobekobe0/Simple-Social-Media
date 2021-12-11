@@ -57,6 +57,12 @@ const LIST_STYLE = {
     padding: '1rem',
 }
 
+const FORM_STYLE = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flexStart',
+}
+
 function EditProfile(props) {
     const [pfpUpload, setPfpUpload] = useState('')
     const [bgUpload, setBgUpload] = useState('')
@@ -136,33 +142,63 @@ function EditProfile(props) {
                 </div>
                 <hr style={{ margin: '0' }} />
                 <div style={BODY_STYLE}>
-                    <form onSubmit={updateUser}>
+                    <form onSubmit={updateUser} style={FORM_STYLE}>
                         <img src={pfpUpload} alt="" />
+                        <h3 style={{ fontSize: '0.8rem' }}>
+                            Upload new profile picture
+                        </h3>
                         <input
                             type="file"
                             onChange={(e) => setPfpUpload(e.target.files[0])}
                         />
+                        <hr />
+                        <h3 style={{ fontSize: '0.8rem' }}>
+                            Upload new banner
+                        </h3>
                         <input
                             type="file"
+                            placeholder="Profile Background"
                             onChange={(e) => setBgUpload(e.target.files[0])}
                         />
-
+                        <hr />
+                        <h3 style={{ fontSize: '0.8rem' }}>New username</h3>
                         <input
                             type="username"
+                            placeholder="enter new username"
                             maxLength="12"
                             minLength="4"
                             onChange={(e) => setUpdatedUsername(e.target.value)}
                         />
+
+                        <h3 style={{ fontSize: '0.8rem', marginTop: '10px' }}>
+                            New password
+                        </h3>
                         <input
                             type="password"
+                            placeholder="enter new password"
                             maxLength="12"
                             minLength="4"
                             onChange={(e) => setUpdatedPassword(e.target.value)}
                         />
+                        <button
+                            disabled={disable}
+                            onClick={updateUser}
+                            className="submitEditBtn"
+                            style={{
+                                bottom: '0',
+                                position: 'absolute',
+                                marginBottom: '1rem',
+                                alignSelf: 'flex-end',
+                                width: '30%',
+                                height: '2rem',
+                                border: 'none',
+                                borderRadius: '10px',
+                                backgroundColor: 'lightblue',
+                            }}
+                        >
+                            update
+                        </button>
                     </form>
-                    <button disabled={disable} onClick={updateUser}>
-                        update
-                    </button>
                 </div>
             </div>
         </>,

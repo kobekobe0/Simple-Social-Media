@@ -78,7 +78,7 @@ function Userinfo(props) {
     useEffect(() => {
         setFollowing(props.following)
         setFollowers(props.followers)
-        checkFollow()
+        props.visit ? checkFollow() : console.log('no')
     }, [props.following, trigger])
 
     return (
@@ -120,12 +120,14 @@ function Userinfo(props) {
                             open={followerShow}
                             close={() => setFollowerShow(false)}
                             trigger={trigger}
+                            visit={props.visit}
                         />
                         <Follows
                             following={following}
                             open={followingShow}
                             close={() => setFollowingShow(false)}
                             trigger={trigger}
+                            visit={props.visit}
                         />
                     </div>
                 </div>
