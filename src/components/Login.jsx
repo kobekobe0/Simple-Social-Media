@@ -10,6 +10,7 @@ function Login() {
     const { signup, setCurrentUser } = useAuth()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [error, setError] = useState(false)
     const history = useHistory()
 
     const Login = (e) => {
@@ -21,7 +22,7 @@ function Login() {
 
                 console.log('error login')
             })
-            .catch((e) => console.log(e))
+            .catch((e) => setError(true))
     }
 
     return (
@@ -42,6 +43,9 @@ function Login() {
                     <p style={{ fontSize: '10px' }}>
                         <Link to="/reset">forgot password?</Link>
                     </p>
+                    {error ? (
+                        <p style={{ color: 'red' }}>wrong credentials</p>
+                    ) : null}
                     <button id="login">Login</button>
                 </form>
                 <p>
