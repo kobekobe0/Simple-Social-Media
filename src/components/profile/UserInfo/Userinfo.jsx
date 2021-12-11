@@ -103,13 +103,19 @@ function Userinfo(props) {
                         {props.visit ? props.username : currentUser.displayName}
                     </p>
                     <div className="follows">
-                        <p onClick={() => setFollowerShow(true)}>
+                        <p
+                            onClick={() => setFollowerShow(true)}
+                            style={{ margin: '0' }}
+                        >
                             <strong>
                                 {followers ? followers.length : '1'}
                             </strong>{' '}
                             Followers
                         </p>
-                        <p onClick={() => setFollowingShow(true)}>
+                        <p
+                            onClick={() => setFollowingShow(true)}
+                            style={{ margin: '0' }}
+                        >
                             <strong>
                                 {following ? following.length : '0'}
                             </strong>{' '}

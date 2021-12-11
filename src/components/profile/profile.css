@@ -165,7 +165,7 @@
         height: 100px;
     }
     .profileHeader .profileInfo .profileStat .profileUsername {
-        font-size: 2rem;
+        font-size: 1.7rem;
     }
     .postBlock {
         width: 100vw;
@@ -200,5 +200,9 @@
     .profileHeader .profileInfo .profileImg img {
         width: 100px;
         height: 100px;
+    }
+    .profileHeader .profileInfo .profileStat .follows p {
+        font-size: 0.7rem;
+        padding-right: 0.5rem;
     }
 }
