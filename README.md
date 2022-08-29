@@ -14,3 +14,4 @@ Features:
  - Profile customization
    - Profile picture
    - Background Picture
+   - Change name
